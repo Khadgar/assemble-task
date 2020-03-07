@@ -1,0 +1,1 @@
+web: node assemble-app/app.js
