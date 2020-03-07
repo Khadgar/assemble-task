@@ -1,0 +1,50 @@
+.cartItemContainer {
+  width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.stepper {
+  display: flex;
+}
+
+.minus {
+  width: 26px;
+  height: 26px;
+  background-image: url(./assets/Minus.svg);
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.plus {
+  width: 26px;
+  height: 26px;
+  background-image: url(./assets/Add.svg);
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.picture {
+  width: 100px;
+  height: 100px;
+}
+
+.pic-38094374 {
+  background-image: url(./assets/red-shirt.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.pic-38094375 {
+  background-image: url(./assets/blue-shirt.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.pic-38094321 {
+  background-image: url(./assets/blue-socks.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}

@@ -1,0 +1,27 @@
+.checkoutContainer{
+    display: flex;
+    padding-top: 60px;
+}
+
+.paymentInformationContainer{
+    display: flex;
+    flex-direction: column;
+    padding:20px;
+}
+.billingAddressContainer{
+    display: flex;
+    flex-direction: column; 
+    padding:20px;
+}
+
+.totalPriceContainer{
+    display: flex;
+    flex-direction: column; 
+    padding:20px;
+}
+
+.navigation{
+    display: flex;
+    padding:20px;
+    align-self: flex-end;
+}

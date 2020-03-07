@@ -1,33 +1,41 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './styles/app.css';
-import HomeComponent from './components/HomeComponent';
+
 import NoMatch from './components/NoMatch';
 
-import ComponentOne from './components/ComponentOne';
-import ComponentTwo from './components/ComponenetTwo';
-import ComponentThree from './components/ComponentThree';
+import ReviewCart from './components/ReviewCart';
+import CheckOut from './components/CheckOut';
+import OrderComplete from './components/OrderComplete';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { users: null };
-    this.fetchData = this.fetchData.bind(this);
+    const cart = [
+      { sku: 38094374, unitPrice: 24.0, name: 'Red Shirt', quantity: 2 },
+      { sku: 38094375, unitPrice: 24.0, name: 'Blue Shirt', quantity: 1 },
+      { sku: 38094321, unitPrice: 12.0, name: 'Blue socks', quantity: 4 },
+    ];
+    this.state = { cart, checkoutDetails: null };
+    this.onQuantityChange = this.onQuantityChange.bind(this);
+    this.onCheckOutSubmit = this.onCheckOutSubmit.bind(this);
+    this.clearCart = this.clearCart.bind(this);
   }
 
-  componentDidMount() {}
+  onQuantityChange(changedItem) {
+    this.state.cart.find(el => el.sku === changedItem.sku).quantity = changedItem.newQuantity;
+    this.setState({
+      cart: this.state.cart,
+    });
+  }
 
-  componentWillUnmount() {}
+  onCheckOutSubmit(orderInfo) {
+    console.log('ORDER PLACED:', orderInfo);
+    this.setState({ checkoutDetails: orderInfo });
+  }
 
-  fetchData() {
-    fetch(`${window.location.protocol}//jsonplaceholder.typicode.com/users`)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ users: data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  clearCart() {
+    this.setState({ cart: this.state.cart.map(item => ({ ...item, quantity: 0 })) });
   }
 
   render() {
@@ -38,21 +46,34 @@ class App extends Component {
             <Route
               path="/"
               exact
-              render={props => <HomeComponent {...props} data={this.state.users} />}
-            />
-            <Route
-              path="/component-1"
               render={props => (
-                <ComponentOne {...props} data={this.state.users} handleUserFetch={this.fetchData} />
+                <ReviewCart
+                  {...props}
+                  cart={this.state.cart}
+                  handleCartChange={this.onQuantityChange}
+                />
               )}
             />
             <Route
-              path="/component-2"
-              render={props => <ComponentTwo {...props} data={this.state.users} />}
+              path="/check-out"
+              render={props => (
+                <CheckOut
+                  {...props}
+                  cart={this.state.cart}
+                  handleCheckOut={this.onCheckOutSubmit}
+                  handleClearCart={this.clearCart}
+                />
+              )}
             />
             <Route
-              path="/component-3"
-              render={props => <ComponentThree {...props} data={this.state.users} />}
+              path="/order-complete"
+              render={props => (
+                <OrderComplete
+                  {...props}
+                  cart={this.state.cart}
+                  orderInfo={this.state.checkoutDetails}
+                />
+              )}
             />
             <Route component={NoMatch} />
           </Switch>
