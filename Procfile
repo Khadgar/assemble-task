@@ -1,1 +1,1 @@
-web: node assemble-app/app.js
+web: node app.js
