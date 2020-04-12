@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import '../styles/header-component.css';
 
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => {
+  return { products: state.products };
+};
+
 class HeaderComponent extends Component {
   render() {
     return (
@@ -8,7 +14,7 @@ class HeaderComponent extends Component {
         <div className="title">Assemble Store</div>
         <div className="cartIcon">
           <div className="cartSize">
-            {this.props.cart.reduce((curr, acc) => curr + acc.quantity, 0)}
+            {this.props.products.reduce((curr, acc) => curr + acc.quantity, 0)}
           </div>
         </div>
       </div>
@@ -16,4 +22,6 @@ class HeaderComponent extends Component {
   }
 }
 
-export default HeaderComponent;
+const ConnectedHeaderComponent = connect(mapStateToProps, null)(HeaderComponent);
+
+export default ConnectedHeaderComponent;

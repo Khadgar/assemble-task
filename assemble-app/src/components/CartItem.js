@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
 import '../styles/cart-item.css';
 
-class CartItem extends Component {
-  constructor(props) {
-    super(props);
-    this.handleQuantityChange = this.handleQuantityChange.bind(this);
-  }
+import { connect } from 'react-redux';
+import { changeQuantity } from '../actions/index';
 
-  handleQuantityChange(operation) {
+const mapStateToProps = (state) => {
+  return { products: state.products };
+};
+
+class CartItem extends Component {
+  handleQuantityChange = (operation) => {
     if (operation === 'minus') {
-      this.props.handleQuantityChange({
+      this.props.changeQuantity({
         sku: this.props.item.sku,
         newQuantity: this.props.item.quantity > 0 ? this.props.item.quantity - 1 : 0,
       });
     } else {
-      this.props.handleQuantityChange({
+      this.props.changeQuantity({
         sku: this.props.item.sku,
         newQuantity: this.props.item.quantity + 1,
       });
     }
-  }
+  };
 
   render() {
     const price = this.props.item.quantity * this.props.item.unitPrice;
@@ -53,4 +55,6 @@ class CartItem extends Component {
   }
 }
 
-export default CartItem;
+const ConnectedCartItem = connect(mapStateToProps, { changeQuantity })(CartItem);
+
+export default ConnectedCartItem;
